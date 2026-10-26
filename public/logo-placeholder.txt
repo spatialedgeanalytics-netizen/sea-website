@@ -1,0 +1,6 @@
+Place your SEA logo file here as "logo.png"
+
+The two logo images you provided should be saved as:
+  - logo.png  (the circular logo, ideally with transparent background)
+
+This file (logo-placeholder.txt) can be deleted once you've added logo.png.
