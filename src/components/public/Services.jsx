@@ -79,7 +79,7 @@ export default function Services() {
                   overflow: 'hidden', background: photo ? '#e8edf2' : '#f4f6f9',
                 }}>
                   {photo ? (
-                    <img src={photo} alt={service.short}
+                    <img src={photo} alt={service.short} loading="lazy"
                       style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
                     />
                   ) : (

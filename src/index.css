@@ -16,7 +16,7 @@
   --shadow-lg: 0 8px 32px rgba(26,45,66,0.18);
   --radius: 10px;
   --radius-lg: 18px;
-  --font: 'Source Sans Pro', sans-serif;
+  --font: 'Source Sans Pro', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }

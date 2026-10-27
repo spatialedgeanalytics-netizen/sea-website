@@ -1,19 +1,21 @@
-import React, { useState } from 'react'
+import React, { Suspense, lazy, useState } from 'react'
 import AdminNav from '../components/admin/AdminNav'
-import Dashboard from '../components/admin/Dashboard'
-import Accounts from '../components/admin/Accounts'
-import Deductions from '../components/admin/Deductions'
-import Inventory from '../components/admin/Inventory'
-import Quotations from '../components/admin/Quotations'
-import Gallery from '../components/admin/Gallery'
-import Documents from '../components/admin/Documents'
-import Chat from '../components/admin/Chat'
-import Tasks from '../components/admin/Tasks'
-import Leave from '../components/admin/Leave'
-import Vacancies from '../components/admin/Vacancies'
-import Profile from '../components/admin/Profile'
-import AuditTrail from '../components/admin/AuditTrail'
 import { useAuth } from '../contexts/AuthContext'
+
+// Each module downloads only when its tab is first opened
+const Dashboard = lazy(() => import('../components/admin/Dashboard'))
+const Accounts = lazy(() => import('../components/admin/Accounts'))
+const Deductions = lazy(() => import('../components/admin/Deductions'))
+const Inventory = lazy(() => import('../components/admin/Inventory'))
+const Quotations = lazy(() => import('../components/admin/Quotations'))
+const Gallery = lazy(() => import('../components/admin/Gallery'))
+const Documents = lazy(() => import('../components/admin/Documents'))
+const Chat = lazy(() => import('../components/admin/Chat'))
+const Tasks = lazy(() => import('../components/admin/Tasks'))
+const Leave = lazy(() => import('../components/admin/Leave'))
+const Vacancies = lazy(() => import('../components/admin/Vacancies'))
+const Profile = lazy(() => import('../components/admin/Profile'))
+const AuditTrail = lazy(() => import('../components/admin/AuditTrail'))
 
 const COMPONENTS = {
   dashboard: Dashboard,
@@ -70,7 +72,9 @@ export default function AdminPage() {
 
         {/* Page content */}
         <div style={{ padding: '32px' }}>
-          <ActiveComponent setActive={setActiveTab} />
+          <Suspense fallback={<p style={{ color: 'var(--text-muted)' }}>Loading...</p>}>
+            <ActiveComponent setActive={setActiveTab} />
+          </Suspense>
         </div>
       </main>
 

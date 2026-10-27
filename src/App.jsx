@@ -1,9 +1,11 @@
-import React from 'react'
+import React, { Suspense, lazy } from 'react'
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { AuthProvider, useAuth } from './contexts/AuthContext'
 import PublicPage from './pages/PublicPage'
-import AdminLogin from './pages/AdminLogin'
-import AdminPage from './pages/AdminPage'
+
+// The admin side is downloaded only when someone goes to /admin
+const AdminLogin = lazy(() => import('./pages/AdminLogin'))
+const AdminPage = lazy(() => import('./pages/AdminPage'))
 
 function ProtectedAdmin() {
   const { user, loading } = useAuth()
@@ -23,12 +25,14 @@ export default function App() {
   return (
     <AuthProvider>
       <BrowserRouter basename={import.meta.env.BASE_URL} future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
-        <Routes>
-          <Route path="/" element={<PublicPage />} />
-          <Route path="/admin/login" element={<AdminLoginRoute />} />
-          <Route path="/admin" element={<ProtectedAdmin />} />
-          <Route path="*" element={<Navigate to="/" replace />} />
-        </Routes>
+        <Suspense fallback={null}>
+          <Routes>
+            <Route path="/" element={<PublicPage />} />
+            <Route path="/admin/login" element={<AdminLoginRoute />} />
+            <Route path="/admin" element={<ProtectedAdmin />} />
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
+        </Suspense>
       </BrowserRouter>
     </AuthProvider>
   )

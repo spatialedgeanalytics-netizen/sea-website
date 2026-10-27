@@ -6,7 +6,6 @@ import {
   DEFAULT_TERMS, KM_PER_LITRE, calcQuote, defaultSummary, downloadQuotationPdf,
   fillTerm, formatRef, money, num, parseNumber, r2,
 } from '../../lib/quotationPdf'
-import { downloadLegacyQuotationPdf } from '../../lib/quotationPdfLegacy'
 
 const SELECT = '*, created_by_profile:admin_profiles!created_by(full_name, signature_url), signed_by_profile:admin_profiles!signed_by(full_name, signature_url)'
 
@@ -110,7 +109,10 @@ export default function Quotations() {
   const signatureFor = (q) => (q.signed_by_profile || q.created_by_profile)?.signature_url
 
   const generatePDF = async (q) => {
-    if (isLegacy(q)) return downloadLegacyQuotationPdf(q)
+    if (isLegacy(q)) {
+      const { downloadLegacyQuotationPdf } = await import('../../lib/quotationPdfLegacy')
+      return downloadLegacyQuotationPdf(q)
+    }
     const missing = await downloadQuotationPdf(q, signatureFor(q))
     if (missing.length) console.warn('Quotation PDF made without:', missing.join(', '))
   }

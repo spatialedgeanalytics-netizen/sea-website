@@ -6,7 +6,6 @@
 //   fonts/Aptos.ttf, fonts/Aptos Bold.ttf, fonts/Aptos Italic.ttf  - optional, Helvetica otherwise
 //   (aptos.ttf / aptos-bold.ttf / aptos-italic.ttf also work)
 // The signature is the signing admin's uploaded signature (My Profile); without one the line is left blank.
-import jsPDF from 'jspdf'
 import { format } from 'date-fns'
 import { supabase } from './supabase'
 
@@ -476,6 +475,7 @@ export async function downloadQuotationPdf(row, signatureUrl) {
     findImage('logo'), findImage('logo2'), loadSignature(signatureUrl), loadAptos(),
   ])
 
+  const { default: jsPDF } = await import('jspdf')
   const doc = new jsPDF({ unit: 'pt', format: 'a4' })
   let fonts = { reg: ['helvetica', 'normal'], bold: ['helvetica', 'bold'], ital: ['helvetica', 'italic'] }
   if (aptos) {

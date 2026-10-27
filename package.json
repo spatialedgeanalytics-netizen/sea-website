@@ -20,7 +20,9 @@
     "react-router-dom": "^6.21.0"
   },
   "devDependencies": {
+    "@vitejs/plugin-legacy": "^5.4.3",
     "@vitejs/plugin-react": "^4.2.1",
+    "terser": "^5.51.2",
     "vite": "^5.0.8"
   }
 }
